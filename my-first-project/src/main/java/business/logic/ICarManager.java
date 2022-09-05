@@ -1,11 +1,11 @@
 package business.logic;
 
 import java.util.List;
-import dataaccess.model.Car2;
+import dataaccess.model.car_0;
 
 public interface ICarManager {
-	String createCar(Car2 data);
-	String updateCar(Car2 data);
-	String deleteCar(Car2 data);
-	List<Car2> getAllCar();
+	String createCar(car_0 data);
+	String updateCar(car_0 data);
+	String deleteCar(car_0 data);
+	List<car_0> getAllCar();
 }

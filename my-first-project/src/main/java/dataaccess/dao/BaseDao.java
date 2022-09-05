@@ -3,7 +3,7 @@ package dataaccess.dao;
 import java.util.List;
 
 import dataaccess.dbconnection.IUOW;
-import dataaccess.model.Car2;
+import dataaccess.model.car_0;
 
 public abstract class BaseDao <T> implements IBaseDao<T>{
 	
@@ -44,8 +44,8 @@ public abstract class BaseDao <T> implements IBaseDao<T>{
 		this._uow.GetCurrentDBConnection().delete(t);
 	}
 	
-	public List<Car2> getAllCar() {
-		return this._uow.GetCurrentDBConnection().createQuery("from cra", Car2.class).list();
+	public List<car_0> getAllCar() {
+		return this._uow.GetCurrentDBConnection().createQuery("from car_0",car_0.class).list();
 	}
 	
 	public String getcarName() {

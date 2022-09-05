@@ -22,7 +22,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
   
         <!-- Annotated entity classes -->
-        <mapping class="dataaccess.model.Car2"/>
+        <mapping resource="car_0.hbm.xml" />
          
     </session-factory>
 </hibernate-configuration>

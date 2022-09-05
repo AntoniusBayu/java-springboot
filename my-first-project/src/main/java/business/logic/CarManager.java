@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import dataaccess.dao.CarDao;
 import dataaccess.dbconnection.IUOW;
-import dataaccess.model.Car2;
+import dataaccess.model.car_0;
 
 @Service
 public class CarManager implements ICarManager{
@@ -15,7 +15,7 @@ public class CarManager implements ICarManager{
 	private IUOW _uow;
 	
 	@Override
-	public String createCar(Car2 data) {
+	public String createCar(car_0 data) {
 		try 
 		{
 			_uow.openConnection();
@@ -42,7 +42,7 @@ public class CarManager implements ICarManager{
 	}
 
 	@Override
-	public String updateCar(Car2 data) {
+	public String updateCar(car_0 data) {
 		try 
 		{
 			_uow.openConnection();
@@ -51,9 +51,9 @@ public class CarManager implements ICarManager{
 			
 			_uow.begintran();
 			
-			var currData = x.get(data.getCarID());
-			currData.setCarName(data.getCarName());
-			currData.setCreatedDate(data.getCreatedDate());
+			var currData = x.get(data.getCarid());
+			currData.setCarname(data.getCarname());
+			currData.setCreateddate(data.getCreateddate());
 			
 			x.update(currData);
 			
@@ -73,7 +73,7 @@ public class CarManager implements ICarManager{
 	}
 
 	@Override
-	public String deleteCar(Car2 data) {
+	public String deleteCar(car_0 data) {
 		try 
 		{
 			_uow.openConnection();
@@ -100,17 +100,17 @@ public class CarManager implements ICarManager{
 	}
 
 	@Override
-	public List<Car2> getAllCar() {
+	public List<car_0> getAllCar() {
 		try 
 		{
 			_uow.openConnection();
 			
 			var x = new CarDao(_uow);
 		
-			var y = x.getcarName();
+			//var y = x.getcarName();
 			
 			var data = x.getAllCar();
-			data.get(0).setCarName(y);
+			//data.get(0).setCarName(y);
 			return data;
 		}
 		catch(Exception ex)

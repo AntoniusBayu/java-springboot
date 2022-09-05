@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+      <!-- com.geeksforgeeks.GeekUserDetails 
+         is the name of the java class
+          GeekUserDetails is the name of the table -->
+    <class name="dataaccess.model.car_0" table="car_0">
+        <id name="carid" type="long" column="carid">
+            <generator class="native"/>
+        </id>
+        <property name="carname" type = "string">
+            <column name="carname"/>
+        </property>
+        <property name="createddate" type = "timestamp">
+            <column name="createddate"/>
+        </property>
+        <property name="isactive" type="boolean">
+            <column name="isactive"/>
+        </property>
+    </class>
+</hibernate-mapping>

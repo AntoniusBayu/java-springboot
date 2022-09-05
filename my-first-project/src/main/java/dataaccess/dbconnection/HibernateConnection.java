@@ -2,12 +2,13 @@ package dataaccess.dbconnection;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class HibernateConnection implements IDBConnection {
-	@Autowired
+	
 	private SessionFactory  _sessionfactory;
 	private Session _session;
 
@@ -15,6 +16,7 @@ public class HibernateConnection implements IDBConnection {
 	public void openConnection() {
 		if(_session == null)
 		{
+			this._sessionfactory = new Configuration().configure().buildSessionFactory();
 			this._session = _sessionfactory.openSession();
 		}
 	}
@@ -25,6 +27,7 @@ public class HibernateConnection implements IDBConnection {
 		{
 			_session.close();
 			_sessionfactory.close();
+			_session = null;
 		}
 	}
 	
