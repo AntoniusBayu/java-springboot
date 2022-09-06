@@ -26,7 +26,7 @@ public abstract class BaseDao <T> implements IBaseDao<T>{
 
 	@Override
 	public List<T> getAll() {
-		return this._uow.GetCurrentDBConnection().createQuery("select * from " + modelClass.getName() + "", modelClass).list();
+		return this._uow.GetCurrentDBConnection().createQuery("from " + modelClass.getName() + "", modelClass).list();
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public abstract class BaseDao <T> implements IBaseDao<T>{
 
 	@Override
 	public void delete(T t) {
-		this._uow.GetCurrentDBConnection().delete(t);
+		this._uow.GetCurrentDBConnection().delete(t);;
 	}
 	
 	public List<car_0> getAllCar() {

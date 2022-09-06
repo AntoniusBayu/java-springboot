@@ -2,7 +2,6 @@ package dataaccess.model;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.ZonedDateTime;
 
 public class car_0 implements Serializable{
 	private static final long serialVersionUID = 1L;

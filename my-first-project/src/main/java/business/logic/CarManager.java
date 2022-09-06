@@ -107,10 +107,8 @@ public class CarManager implements ICarManager{
 			
 			var x = new CarDao(_uow);
 		
-			//var y = x.getcarName();
+			var data = x.getAll();
 			
-			var data = x.getAllCar();
-			//data.get(0).setCarName(y);
 			return data;
 		}
 		catch(Exception ex)
