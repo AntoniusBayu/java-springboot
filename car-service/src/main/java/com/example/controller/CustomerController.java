@@ -13,14 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.service.ICustomerservice;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.model.*;
 
 @RestController
 @RequestMapping("/api/v1/customer")
 public class CustomerController {
 	private static final Logger _logger = Logger.getLogger(CustomerController.class.getName());
+	private ObjectMapper _obj = new ObjectMapper();
 	@Autowired
-	ICustomerservice _service;
+	private ICustomerservice _service;
 	
 	@GetMapping("/customer")
 	public String customer() {
@@ -45,6 +48,15 @@ public class CustomerController {
 	@PostMapping("/postcustomer")
 	public String postcustomer(@RequestBody customer data) {
 		_logger.info("Masuk ke endpoint postcustomer");
+		String x = "";
+		
+		try {
+			x = _obj.writeValueAsString(data);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		_logger.info(x);
 		_service.saveCustomer(data);
 		
 		return "berhasil di post";
@@ -53,6 +65,15 @@ public class CustomerController {
 	@PutMapping("/putcustomer")
 	public String putcustomer(@RequestBody customer data) {
 		_logger.info("Masuk ke endpoint putcustomer");
+		String x = "";
+		
+		try {
+			x = _obj.writeValueAsString(data);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		_logger.info(x);
 		_service.updateCustomer(data);
 		
 		return "berhasil di put";
@@ -61,6 +82,15 @@ public class CustomerController {
 	@DeleteMapping("/deletecustomer/{id}")
 	public String deletecustomer(@PathVariable("id") String id) {
 		_logger.info("Masuk ke endpoint deletecustomer");
+		String x = "";
+		
+		try {
+			x = _obj.writeValueAsString(id);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		_logger.info(x);
 		_service.deleteCustomer(id);
 		
 		return "berhasil di dedelete";

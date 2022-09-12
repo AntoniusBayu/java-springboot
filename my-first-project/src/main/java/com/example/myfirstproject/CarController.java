@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import business.logic.ICarManager;
 import dataaccess.model.car_0;
 
@@ -19,6 +22,7 @@ import dataaccess.model.car_0;
 @RequestMapping("/api/v1/car")
 public class CarController {
 	private static final Logger _logger = Logger.getLogger(CarController.class.getName());
+	private ObjectMapper _obj = new ObjectMapper();
 	@Autowired
 	ICarManager _CarMan;
 	
@@ -33,6 +37,15 @@ public class CarController {
 	@PostMapping("/postcar")
 	public String postcar(@RequestBody car_0 data) {
 		_logger.info("Masuk ke endpoint postcar");
+		String y = "";
+		
+		try {
+			y = _obj.writeValueAsString(data);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		_logger.info(y);
 		var x = _CarMan.createCar(data);
 		
 		return x;
@@ -41,6 +54,15 @@ public class CarController {
 	@PutMapping("/putcar")
 	public String putcar(@RequestBody car_0 data) {
 		_logger.info("Masuk ke endpoint putcar");
+		String y = "";
+		
+		try {
+			y = _obj.writeValueAsString(data);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		_logger.info(y);
 		var x = _CarMan.updateCar(data);
 		
 		return x;
@@ -49,6 +71,15 @@ public class CarController {
 	@DeleteMapping("/deletecar")
 	public String deletecar(@RequestBody car_0 data) {
 		_logger.info("Masuk ke endpoint deletecar");
+		String y = "";
+		
+		try {
+			y = _obj.writeValueAsString(data);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		_logger.info(y);
 		var x = _CarMan.deleteCar(data);
 		
 		return x;
