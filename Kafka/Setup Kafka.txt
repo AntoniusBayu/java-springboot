@@ -1,0 +1,16 @@
+Setup dulu config dari download si apache kafka nya. Ada ubah zookeeper config sama server config Link = https://www.loginradius.com/blog/engineering/quick-kafka-installation/
+
+Masuk ke folder C:/kafka/bin/windows/
+
+Jalanin di powershell syntax dibawah
+
+Producer Create Topics
+./kafka-topics.bat --create --topic test-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
+
+Inject Message di Producer
+.\kafka-console-producer.bat --broker-list localhost:9092 --topic test-topic
+
+nanti bakal muncul >, baru mainkan message nya
+
+Consumer
+./kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test-topic --from-beginning
