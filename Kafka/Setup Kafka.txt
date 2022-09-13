@@ -14,3 +14,19 @@ nanti bakal muncul >, baru mainkan message nya
 
 Consumer
 ./kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test-topic --from-beginning
+./kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic customer-topics --from-beginning
+
+stop kafka server
+./bin/windows/kafka-server-stop.bat
+
+start kafka server
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+stop zookeeper
+./bin/windows/zookeeper-server-stop.bat
+
+start zookeeper
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+delete topics
+./bin/windows/kafka-delete-records.bat --bootstrap-server localhost:9092 --offset-json-file ./offsetfile.json

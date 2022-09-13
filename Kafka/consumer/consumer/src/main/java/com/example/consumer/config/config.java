@@ -28,7 +28,7 @@ public class config {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "customer");
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
-                new JsonDeserializer<>(customer.class));
+                new JsonDeserializer<>(customer.class,false));
     }
 
     @Bean
