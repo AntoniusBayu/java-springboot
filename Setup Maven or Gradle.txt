@@ -1,0 +1,5 @@
+Baik Maven sama Gradle cara setupnya sama
+
+1.) Download component gradle or maven
+2.) Bikin folder manual di C terus file zip yg udah di unzip copy ke folder yg kita buat di C
+3.) Setup Environment variable. Link setup nya disini ==> https://gradle.org/install/

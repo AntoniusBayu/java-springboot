@@ -14,6 +14,8 @@ public class cloudConfig {
                         .uri("http://localhost:8082/"))
                 .route(r -> r.path("/api/v1/customer/**")
                         .uri("http://localhost:8081/"))
+                .route(r -> r.path("/api/v1/customerkafka/**")
+                        .uri("http://localhost:8083/"))
                 .build();
     }
 }
