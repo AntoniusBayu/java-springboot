@@ -1,19 +1,32 @@
 package com.example.authorization.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.example.authorization.service.CustomUserDetailService;
+
 
 @EnableWebSecurity
 public class DefaultConfig {
+	@Autowired 
+    CustomUserDetailService _service;
+	@Autowired
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(_service).passwordEncoder(passwordEncoder());
+    }
+	
+	public PasswordEncoder passwordEncoder(){
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+	
 	@Bean
     SecurityFilterChain configureSecurityFilterChain(HttpSecurity http) throws Exception {
         
@@ -26,15 +39,6 @@ public class DefaultConfig {
 	
 	@Bean
     public UserDetailsService users() {
-        
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        // Disini setup user nya. Connect db bisa kesini nanti ya
-        UserDetails user = User.withUsername("sergey")
-                .password(encoder.encode("password"))
-                .roles("USER")
-                .build();
-        
-        return new InMemoryUserDetailsManager(user);
-        
+        return _service;
     }
 }

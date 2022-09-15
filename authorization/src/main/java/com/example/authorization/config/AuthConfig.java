@@ -59,6 +59,7 @@ public class AuthConfig {
                 .redirectUri("http://127.0.0.1:8080/authorized")
                 .scope(OidcScopes.OPENID)
                 .scope("read")
+                .scope("write")
                 //.clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .build();
         
