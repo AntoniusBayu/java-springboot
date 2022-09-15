@@ -2,6 +2,7 @@ package com.example.controller;
 
 
 import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,9 @@ public class CustomerController {
 	@GetMapping("/helloworld")
 	public String helloworld() {
 		_logger.info("Masuk ke endpoint helloworld");
+		//var x = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		//System.out.print(x);
 		return "Hello World";
 	}
 	
