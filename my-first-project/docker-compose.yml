@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: my-first-project
+    image: my-first-project:latest
+    build: ./
+    ports:
+      - "8082:8082"
+    depends_on:
+      - dbpostgres
+  dbpostgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=superadmin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
