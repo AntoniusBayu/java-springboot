@@ -1,0 +1,12 @@
+ALTER TABLE book
+ADD COLUMN createdate TIMESTAMP,
+ADD COLUMN IsActive BOOLEAN;
+
+ALTER TABLE Book
+ALTER COLUMN bookname TYPE varchar(300);
+
+ALTER TABLE Book
+DROP COLUMN CreateDate;
+
+ALTER TABLE Book
+  RENAME COLUMN bookname TO bookdesc;

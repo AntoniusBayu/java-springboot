@@ -1,0 +1,29 @@
+-- Table: public.Car
+
+-- DROP TABLE IF EXISTS public."Car";
+
+-- IF NOT EXISTS ==> Ini syntax bakal run table name kalau dia blm exists, kalau udah exists gak dijalanin.
+-- Ada tipe data timestamp with time zone, disini bisa kita set timezone US. Bisa simpen timezone yang berbeda
+-- Kalau nama table nya diawali huruf besar by default dia kudu pake "" buat select table nya
+
+CREATE TABLE IF NOT EXISTS public."Car"
+(
+    "CarID" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    "CarName" character varying(255)[] COLLATE pg_catalog."default" NOT NULL,
+    "CreatedDate" timestamp without time zone NOT NULL,
+    "CreatedDateUS" timestamp with time zone NOT NULL,
+    "IsActive" boolean,
+    CONSTRAINT "Car_pkey" PRIMARY KEY ("CarID")
+)
+
+-- Table space ini kalau di SQL kayak .mdf nya
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Car"
+    OWNER to postgres;
+
+-- Comment ini cm gimmick
+
+COMMENT ON COLUMN public."Car"."CarID"
+    IS 'Test';

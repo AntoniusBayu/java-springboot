@@ -1,0 +1,54 @@
+-- Syntax create function return table
+-- Ada function ILIKE. ILIKE ini insenstive tapi kalau pake LIKE ini baru sensitif
+CREATE OR REPLACE FUNCTION fn_getactivecarcontainbyname (p_name VARCHAR) 
+    RETURNS TABLE (
+        carid bigint,
+        namamobil varchar,
+        invname varchar,
+        invcount int,
+        infomobil text
+) 
+AS $$
+BEGIN
+    RETURN QUERY 
+    SELECT
+        A."CarID"
+        ,A."CarName"
+        ,coalesce(B."InventoryName",'Kosong') as inventoryname
+        ,coalesce(B."Count",0) as count
+        ,'Updated' as info
+    FROM "Car" A
+    LEFT JOIN "Inventory" B ON A."CarID" = B."CarID"
+    WHERE
+        A."CarName" ILIKE p_name ;
+END; $$ 
+
+LANGUAGE 'plpgsql';
+
+-- Kalau ada perubahan struktur function, drop dan create ulang. Tapi kalau cuma beda filter dan key join gak perlu drop dan recreate function
+DROP FUNCTION fn_getactivecarcontainbyname
+
+-- SELECT FUNCTION RETURN TABLE
+SELECT * FROM fn_getactivecarcontainbyname('%HON%')
+
+-- Syntax create function return scalar variable
+create function fn_replaceertiga(vname varchar)
+returns varchar
+language plpgsql
+as
+$$
+declare
+   finalname varchar;
+begin
+   select REPLACE(vname,'ertiga','cross')
+   into finalname;
+   
+   return finalname;
+end;
+$$;
+
+-- Test function scalar
+SELECT 
+    "CarName"
+    ,fn_replaceertiga("CarName") as finalname
+FROM "Car"

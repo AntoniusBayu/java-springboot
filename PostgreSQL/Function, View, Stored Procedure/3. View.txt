@@ -1,0 +1,19 @@
+-- CREATE VIEW
+CREATE OR REPLACE VIEW activecar as
+    SELECT
+        A."CarID"
+        ,A."CarName" || ' - ' || 'Updated' as name
+        ,coalesce(B."InventoryName",'Kosong') as inventoryname
+        ,coalesce(B."Count",0) as count
+    FROM "Car" A
+    LEFT JOIN "Inventory" B ON A."CarID" = B."CarID"
+    WHERE A."IsActive" = true
+    
+-- Kalau ada perubah nama kolom kepada existing view perlu di alter
+ALTER VIEW activecar RENAME "InventoryName" TO inventoryname;
+
+-- kalau ada perubahan struktur view, baiknya di drop terus di create ulang. soalnya dia strict terhadap tipe data dan length datanya
+drop view activecar;
+
+SELECT *
+FROM activecar

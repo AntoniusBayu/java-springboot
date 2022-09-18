@@ -1,0 +1,50 @@
+-- Karena nama table dan field ada yang huruf besar, makanya select nya kudu pake "". Kalau gak mau itu, pake huruf kecil.
+-- Select
+SELECT 
+    "CarID"
+    ,"CarName"
+    ,"CreatedDate"
+    ,"CreatedDateUS"
+    ,"IsActive"
+FROM "Car";
+
+-- Kalau di table nya huruf kecil semua, bisa tanpa ""
+-- "" bawaan dari pgadmin4 nya
+SELECT 
+    bookID
+    ,bookDesc
+    ,IsActive
+FROM book;
+
+-- Insert menggunakan variable
+-- Salah satu setup variable di postgre begini
+-- DO statement ini kayak kalau di SQL itu CTE, dia gak bisa tuh declare variable kayak SQL. Mesti begini
+-- Awas ya, ada beda nya varchar array sama yang nggak. Kalau tipe data nya array kudu simpen nya pake "{" awalannya
+do $$ 
+
+declare vCarName character varying(255) := 'toyota 2'; 
+    vCreatedDate timestamp := NOW(); 
+    vCreatedDateUS timestamp := NOW(); 
+    vIsActive boolean := 1;
+
+begin
+
+    insert into "Car"("CarName","CreatedDate","CreatedDateUS","IsActive")
+    values
+        (vCarName,vCreatedDate,vCreatedDate,vIsactive);
+        
+end $$;
+
+do $$ 
+
+declare vInventoryName varchar (255) := 'INV A'; 
+    vCarID BIGINT := 1; 
+    vCount INT := 10;
+
+begin
+
+    insert into "Inventory"("InventoryName","CarID","Count")
+    values
+        (vInventoryName, vCarID, vCount);
+        
+end $$;

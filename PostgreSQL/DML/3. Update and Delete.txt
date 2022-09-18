@@ -1,0 +1,25 @@
+-- Simple Update
+UPDATE "Inventory" A
+SET "InventoryName" = 'INV B'
+from "Inventory"
+WHERE A."InventoryID" = 7
+RETURNING *;
+
+-- Update using join table
+-- Kalau pake join dia agak tricky, karena didalam syntax update udah bisa kasih alias
+-- Dan si alias yang ada di syntax update ini harus masuk where sebagai penghubung ke table from nya
+UPDATE "Inventory" A
+SET "InventoryName" = B."CarName"
+FROM "Inventory" AA
+INNER JOIN "Car" B ON B."CarID" = AA."CarID"
+WHERE A."CarID" = AA."CarID"
+RETURNING A.*;
+
+-- Simple Delete
+DELETE FROM car_0
+where "IsActive" = false
+returning *
+
+-- Delete gak bisa pake join tapu lebih main di kondisi aja
+DELETE FROM book
+WHERE book.bookid IN (select book.bookid from book where isactive = false)

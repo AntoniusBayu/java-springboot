@@ -1,0 +1,11 @@
+-- Index: idx_carID
+
+-- DROP INDEX IF EXISTS public."idx_carID";
+
+CREATE UNIQUE INDEX IF NOT EXISTS "idx_carID"
+    ON public."Car" USING btree
+    ("CarID" ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Car"
+    CLUSTER ON "idx_carID";

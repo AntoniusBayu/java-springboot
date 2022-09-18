@@ -1,0 +1,55 @@
+-- Stored Procedure di PostgreSQl itu support overload procedure. Nama sama tapi beda parameter
+-- Stored Procedure add car
+-- IN OUT itu maksud nya dia bisa sebagai parameter atau sebagai variable output. Kalau variable output dia harus di set nilai nya sebagai returnnya
+-- Awas set variable dan nama sp nya soalnya case sensitif
+CREATE OR REPLACE PROCEDURE usp_addcar
+(
+    vcarid INOUT bigint,
+    vcarname varchar(300),
+    vcreateddate  TIMESTAMP,
+    vcreateddateus timestamp,
+    visactive boolean
+)
+Language plpgsql AS $$
+
+BEGIN
+    
+    INSERT INTO "Car" ("CarName","CreatedDate","CreatedDateUS","IsActive")
+    VALUES(vCarName, vCreatedDate, vCreatedDateUS, vIsactive)
+    
+    RETURNING "CarID" INTO vcarid;
+
+END
+$$;
+
+-- Call the procedure
+-- Kalau ada function kayak NOW gitu perlu spesifikin tipe data nya. Kalau nggak ada, bisa simple aja.
+CALL usp_addCar(null,'suzuki ertiga' ::character varying,NOW()::TIMESTAMP,NOW()::timestamp,true::boolean);
+CALL usp_addCar(null,'suzuki ertiga','2022-09-10','2022-09-10',true);
+
+-- Sample untuk sp update
+-- ada 2 syntax update didalamnya. Kalau salah satu ada error dia gak bakal ke commit jadi gak perlu syntax rollback. Cukup pake syntax end
+CREATE OR REPLACE PROCEDURE usp_deletecar
+(
+    vcarid bigint,
+    vdatetime timestamp
+)
+Language plpgsql AS $$
+
+BEGIN
+    
+    UPDATE "Car"
+    SET "IsActive" = false, "CreatedDate" = vdatetime
+    WHERE "CarID" = vcarid;
+    
+    UPDATE "Car"
+    SET "IsActive" = false
+    WHERE "CarID" = vcarid + 1;
+    
+    COMMIT;
+    
+END
+$$;
+
+-- call delete
+call usp_deletecar(2,'2022-09-10')

@@ -1,0 +1,120 @@
+-- TRIGGER di postgresql ada before dan after event
+-- event nya standar ada insert, updated dan deleted
+-- khusus updated ada function OLD buat dapetin value sebelumnya. Selain itu cm ada NEW
+
+-- Syntax bikin trigger nya before insert
+CREATE OR REPLACE FUNCTION fn_insertauditbeforeinsert()
+
+  RETURNS trigger AS
+
+$$
+
+BEGIN
+
+
+
+    INSERT INTO audittrail ( oldname,newname,inserteddate )
+
+    VALUES('',NEW."InventoryName",current_date);
+
+RETURN NEW;
+
+END;
+
+$$
+
+LANGUAGE 'plpgsql';
+
+-- Syntax bikin trigger nya after insert
+CREATE OR REPLACE FUNCTION fn_insertauditafterinsert()
+
+  RETURNS trigger AS
+
+$$
+
+BEGIN
+
+
+
+    INSERT INTO audittrail ( oldname,newname,inserteddate )
+
+    VALUES('after inserted',NEW."InventoryName",current_date);
+
+RETURN NEW;
+
+END;
+
+$$
+
+LANGUAGE 'plpgsql';
+
+-- Create function buat BEFORE updated
+CREATE OR REPLACE FUNCTION fn_insertauditbeforeupdate()
+
+  RETURNS trigger AS
+
+$$
+
+BEGIN
+
+
+
+    INSERT INTO audittrail ( oldname,newname,inserteddate )
+
+    VALUES(OLD."InventoryName",NEW."InventoryName",current_date);
+
+RETURN NEW;
+
+END;
+
+$$
+
+LANGUAGE 'plpgsql';
+
+-- Syntax buat masang trigger nya before
+CREATE TRIGGER tg_insertauditbeforeinsert
+
+  BEFORE INSERT
+
+  ON "Inventory"
+
+  FOR EACH ROW
+
+  EXECUTE PROCEDURE fn_insertauditbeforeinsert();
+  
+-- Syntax buat masang trigger nya after
+CREATE TRIGGER tg_insertauditafterinsert
+
+  AFTER INSERT
+
+  ON "Inventory"
+
+  FOR EACH ROW
+
+  EXECUTE PROCEDURE fn_insertauditafterinsert();
+  
+-- Syntax buat masang trigger nya before update
+CREATE TRIGGER tg_insertauditbeforeupdate
+
+  BEFORE UPDATE
+
+  ON "Inventory"
+
+  FOR EACH ROW
+
+  EXECUTE PROCEDURE fn_insertauditbeforeupdate();
+  
+--TEST INSERT
+INSERT INTO "Inventory" ("InventoryName","CarID","Count")
+VALUES('Test Trigger',5,10)
+
+--TEST UPDATE
+UPDATE "Inventory"
+SET "InventoryName" = 'TEST UPDATE'
+WHERE "Inventory"."InventoryID" = 8
+
+--SELECT STATEMENT
+SELECT * FROM audittrail;
+
+-- SELECT INVENTORY
+SELECT * FROM "Inventory";

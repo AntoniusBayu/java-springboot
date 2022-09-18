@@ -1,0 +1,27 @@
+-- Insert Multiple Values
+-- Awas field dengan menggunakan "", dia case sensitive.
+-- Boolean perlu ada kutip, kalau nggak error
+-- Returning CarID ini langsung return 3 row id yang ke insert
+Insert into "Car"("CarName","CreatedDate","CreatedDateUS","IsActive")
+Values
+    ('Daihatsu 2',NOW(),NOW(),'1')
+    ,('Honda 2', NOW(), NOW(),'0')
+    ,('Suzuki 2', NOW(),NOW(),'1')
+ Returning "CarID";
+ 
+ -- Select Into
+ -- Boolean kudu filternya gak bisa 1 / 0 tapi true or false
+ Select *
+ INTO car_0
+ FROM "Car"
+ Where "IsActive" = false
+ 
+ Select * from car_0
+ 
+ -- Temp Table
+CREATE TEMP TABLE temptable AS
+SELECT * from car_0;
+
+Select * from temptable
+
+Drop table temptable

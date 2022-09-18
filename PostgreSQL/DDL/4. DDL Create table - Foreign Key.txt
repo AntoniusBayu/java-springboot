@@ -1,0 +1,21 @@
+-- Table: public.Inventory
+
+-- DROP TABLE IF EXISTS public."Inventory";
+
+CREATE TABLE IF NOT EXISTS public."Inventory"
+(
+    "InventoryID" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    "InventoryName" character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    "CarID" bigint NOT NULL,
+    "Count" integer NOT NULL,
+    CONSTRAINT "Inventory_pkey" PRIMARY KEY ("InventoryID"),
+    CONSTRAINT fk_car FOREIGN KEY ("CarID")
+        REFERENCES public."Car" ("CarID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Inventory"
+    OWNER to postgres;
